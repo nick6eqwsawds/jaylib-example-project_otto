@@ -38,6 +38,7 @@ public class Board {
             int y = horizontal ? startY + i : startY + i;
             //int x = horizontal ? startX : startY;
             grid[x][y].setTileType(TileType.SHIP);
+
         }
         ships.add(ship);
     }
@@ -46,7 +47,7 @@ public class Board {
         if (grid[x][y].getTileType() == TileType.SHIP){
             grid[x][y].setTileType(TileType.HIT);
             System.out.println("Hit at "+x+" : "+y);
-        } else {
+        } else if (grid[x][y].getTileType() != TileType.HIT) {
             grid[x][y].setTileType(TileType.MISS);
             System.out.println("Miss at "+x+" : "+y);
             System.out.println("next player turn");
@@ -58,7 +59,7 @@ public class Board {
         }
     }
 
-    public void drawBoard(int offsetX, int offsetY, int ShipTurn) throws InterruptedException {
+    public void drawBoard(int offsetX, int offsetY, int ShowShip) throws InterruptedException {
         for (int i = 0; i < rowsX; i++) {
             for (int j = 0; j < rowsY; j++) {
                 Tile tile = grid[j][i];
@@ -71,7 +72,7 @@ public class Board {
                 }
                 //Thread.sleep(2500);
                 //TimeUnit.SECONDS.sleep(4);
-                if (ShipTurn==1&&tile.getTileType() == TileType.SHIP){
+                if (ShowShip==1&&tile.getTileType() == TileType.SHIP){
                     //TimeUnit.SECONDS.sleep(2);
                     color = GREEN;
                 }
