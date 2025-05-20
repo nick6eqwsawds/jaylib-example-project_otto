@@ -21,7 +21,7 @@ public class CubicMap {
         // Initialization
         //--------------------------------------------------------------------------------------
     final int screenWidth = 800;
-    final int screenHeight = 500;
+    final int screenHeight = 450;
 
         InitWindow(screenWidth, screenHeight, "raylib [models] example - cubesmap loading and drawing");
 
@@ -72,7 +72,7 @@ public class CubicMap {
             EndMode3D();
 
             DrawTextureEx(cubicmap, new Vector2().x(screenWidth - cubicmap.width() * 4 - 20).y( 20), 0.0f, 4.0f, WHITE);
-            DrawRectangleLines(screenWidth - cubicmap.width() * 4 - 20, 20, cubicmap.width() * 4, cubicmap.height() * 4, RED);
+            DrawRectangleLines(screenWidth - cubicmap.width() * 4 - 20, 20, cubicmap.width() * 4, cubicmap.height() * 4, GREEN);
 
             DrawText("cubicmap image used to", 658, 90, 10, GRAY);
             DrawText("generate map 3d model", 658, 104, 10, GRAY);

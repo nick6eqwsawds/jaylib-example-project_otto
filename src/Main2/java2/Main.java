@@ -66,12 +66,12 @@ public class Main {
                     //newPlace = false;
                 }
                 if (Alive == true) {
-                    //System.out.println(placeX + " "+placeY);
+                    System.out.println(placeX + " "+placeY);
                 }
 
                 //int placeY2 = placeY;
                 //int placeX2 = placeX;
-                //DrawCircle(305 + 120 * placeX2, 305 + 120 * placeY2, 20, PINK);
+                DrawCircle(305 + 120 * placeX2, 305 + 120 * placeY2, 20, PINK);
                 newPlace = false;
                 //DrawCircle(305+120*placeX, 305+120*placeY, 20, YELLOW);
 
