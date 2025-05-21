@@ -9,13 +9,13 @@ import java.util.concurrent.TimeUnit.*;
 public class BattleShipsGame {
     private static Board playerBoard;
     private static Board enemyBoard;
-    static int turn = 1;
-    static int stage = 1;
-    static int playerx = 920;
-    static int playery = 100;
-    static int BombWidth = 40;
-    static int BombHeight = 40;
-    static int boats = 0;
+    private static int turn = 1;
+    private static int stage = 1;
+    private static int playerx = 920;
+    private static int playery = 100;
+    private static int BombWidth = 40;
+    private static int BombHeight = 40;
+    private static int boats = 0;
 
     public static void main(String[] args) throws Exception {
         InitWindow(1400, 800, "BattleShips");
@@ -25,25 +25,11 @@ public class BattleShipsGame {
         enemyBoard = new Board(10, 10);
 
 
-/*
-        playerBoard.placeShips(new Ship(3), 3, 2, false);
-        playerBoard.placeShips(new Ship(3), 5, 4, true);
-        playerBoard.placeShips(new Ship(2), 1, 5, false);
-        playerBoard.placeShips(new Ship(3), 9, 0, false);
-        enemyBoard.placeShips(new Ship(4), 3, 3, false);
-        enemyBoard.placeShips(new Ship(4), 9, 0, false);
-        enemyBoard.placeShips(new Ship(2), 0, 7, false);
-        enemyBoard.placeShips(new Ship(4), 5, 5, true);
-
- */
-
-
         while (!WindowShouldClose()) {
             handleInput();
 
             BeginDrawing();
             ClearBackground(WHITE);
-            //SetTargetFPS(60);
             DrawFPS(10, 10);
             if (stage == 1) {
                 DrawText("Press space to begin", 300, 200, 75, BLACK);
@@ -66,6 +52,7 @@ public class BattleShipsGame {
                     DrawText("["+numr+"] : ", 200+i*400, 550, 30, BLACK);
                 }
 
+                //går nog att göra i en fori + forj loop
                 DrawRectangle(675, 140, 199, 39, GREEN);
                 DrawRectangle(1075, 140, 119, 39, GREEN);
                 DrawRectangle(675, 340, 79, 39, GREEN);
@@ -93,6 +80,7 @@ public class BattleShipsGame {
 
                 DrawText("Hold down numbers to pick and place at your character", 40, 560, 20, BLACK);
                 DrawText("Press space to confirm", 40, 600, 20, BLACK);
+                // skapar spelare 1 bräda och alla nummer man klickar för att välja båt och placera
                 playerBoard.drawBoard(100, 100, 1);
                 if (IsKeyDown(KEY_ONE)){
                     int placementx = playerx-700;
@@ -150,6 +138,7 @@ public class BattleShipsGame {
                     playerBoard.placeShips(new Ship(4), shipx6, shipy6, true);
                     boats = boats +1;
                 }
+                // ser att alla båtar lagts ut och byter till nästa persons tur
                 DrawRectangle(playerx-700, playery, BombWidth - 1, BombHeight - 1, YELLOW);
                 if (boats == 6){
                     DrawRectangle(1,1,1390,790,WHITE);
@@ -159,11 +148,13 @@ public class BattleShipsGame {
                     }
                 }
             }
+            //byter till spelare 2 tur
             if (stage == 3) {
-                System.out.println(boats);
-                //DrawRectangle(1,1,1399,799,WHITE);
                 DrawText("Player 2", 950, 50, 30, BLACK);
                 DrawText("Choose your ships!", 950 - 650, 50, 30, BLACK);
+
+                // går säkert att göra i en fori + forj loop men jag fick det inte att fungera
+                // skriver de olika val personen har när de väljer båt
                 for (int i = 1; i < 3; i++) {
                     DrawText("[" + i + "] : ", (200 + i * 400) - 575, 150, 30, BLACK);
                 }
@@ -176,6 +167,7 @@ public class BattleShipsGame {
                     DrawText("[" + numr + "] : ", (200 + i * 400) - 575, 550, 30, BLACK);
                 }
 
+                // Ritar ut alla båtar. går att göra i en fori och forj loop men hinner inte
                 DrawRectangle(675 - 575, 140, 199, 39, GREEN);
                 DrawRectangle(1075 - 575, 140, 119, 39, GREEN);
                 DrawRectangle(675 - 575, 340, 79, 39, GREEN);
@@ -240,6 +232,7 @@ public class BattleShipsGame {
                     boats = boats + 1;
                 }
 
+                // spelare 2 lagt ut alla båtar byter till spelet
                 DrawRectangle(playerx, playery, BombWidth - 1, BombHeight - 1, YELLOW);
                 if (boats == 12){
                     DrawRectangle(1,1,1390,790,WHITE);
@@ -258,35 +251,25 @@ public class BattleShipsGame {
                 DrawText("Press Enter next persons turn", 300, 500, 20, BLACK);
                 DrawText("Press SPACE to fire bomb ", 300, 560, 20, BLACK);
 
-                //playerBoard.drawBoard(100, 100);
-                //enemyBoard.drawBoard(800, 100);
 
 
+                // byter mällan turer för spelaren och motspelaren
                 if (turn == 1) {
-                    //DrawRectangle(100, 100, 399, 399, WHITE);
                     enemyBoard.drawBoard(800, 100, 0);
-                    //playerBoard.drawBoard(100, 100, 0);
-                    //Thread.sleep(2500);
-                    //TimeUnit.SECONDS.sleep(3);
                     playerBoard.drawBoard(100, 100, 1);
                     DrawRectangle(playerx, playery, BombWidth - 1, BombHeight - 1, YELLOW);
                 } else if (turn == 2) {
-                    //DrawRectangle(800, 100, 399, 399, WHITE);
                     playerBoard.drawBoard(100, 100, 0);
-                    //enemyBoard.drawBoard(800, 100, 0);
-                    //Thread.sleep(5000);
                     enemyBoard.drawBoard(800, 100, 1);
                     DrawRectangle(playerx - 700, playery, BombWidth - 1, BombHeight - 1, YELLOW);
                 }
             }
-
-            //System.out.println(GetMouseX()+ " " + GetMouseY());
-
             EndDrawing();
         }
         CloseWindow();
     }
 
+    // alla inputs som spelaren kan göra och hur bomberna ska agera och var bomberna träffar på brädorna
     private static void handleInput() throws Exception {
 
         if (stage == 1) {
@@ -361,60 +344,13 @@ public class BattleShipsGame {
                 BombWidth = BombHeight1;
                 BombHeight = BombWidth1;
             }
-            /*
-            if (playery + BombHeight < 100 + BombHeight) {
-                playery = playery + 40;
-            } else if (playery > 500 - BombHeight) {
-                playery = playery - 40;
-            }
-            if (turn == 1) {
-                if (playerx < 800) {
-                    playerx = playerx + 40;
-                } else if (playerx + BombWidth > 1200) {
-                    playerx = playerx - 40;
-                }
-            }
-            if (turn == 2) {
-
-                if (playerx - 700 < 100) {
-                    playerx = playerx + 40;
-                } else if (playerx - 700 + BombWidth > 500) {
-                    playerx = playerx - 40;
-                }
-            }
-
-             */
 
 
-        /*
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)&&turn==1){
-            //int x = (GetMouseX() - 700) / 40;
-            //int y = (GetMouseY() - 100) / 40;
-            int x = (GetMouseX() - 800) / 40;
-            int y = (GetMouseY() - 100) / 40;
-
-            if (x >= 10){
-                System.out.println("You missed");
-            }
-            if (y >= 10){
-                System.out.println("You missed");
-                turn =2;
-            } else
-             */
-            //if (IsKeyPressed(KEY_SPACE) && turn == 1) {
             if (turn == 1) {
                 if (IsKeyPressed(KEY_SPACE)) {
                     int x = (playerx - 800) / 40;
                     int y = (playery - 100) / 40;
                     if (x >= 0 && y >= 0 && x < 10 && y < 10) {
-                    /*
-                    if (BombWidth>40){
-                        for (int i = 0; i < (BombWidth/40) ; i++) {
-                            enemyBoard.hitTile(x+i, y);
-                        }
-                    }
-
-                     */
                         if (BombHeight > 40 || BombWidth > 40) {
                             for (int i = 0; i < (BombHeight / 40); i++) {
                                 for (int j = 0; j < (BombWidth / 40); j++) {
@@ -424,37 +360,17 @@ public class BattleShipsGame {
                         } else {
                             enemyBoard.hitTile(x, y);
                         }
-                        //Thread.sleep(1000);
-                        //turn = 2;
                     } else {
                         System.out.println("You missed");
-                        //Thread.sleep(1000);
-                        //turn = 2;
-
                     }
-                    //turn = 2;
                 }
             }
-        /*
-        if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)&&turn==2){
-            int x = (GetMouseX() - 100) / 40;
-            int y = (GetMouseY() - 100) / 40;
 
-         */
-            //if (IsKeyPressed(KEY_SPACE)&&turn==2){
             if (turn == 2) {
                 if (IsKeyPressed(KEY_SPACE)) {
                     int x = (playerx - 800) / 40;
                     int y = (playery - 100) / 40;
                     if (x >= 0 && y >= 0 && x < 10 && y < 10) {
-                    /*
-                    if (BombWidth>40){
-                        for (int i = 0; i < (BombWidth/40) ; i++) {
-                            playerBoard.hitTile(x+i, y);
-                        }
-                    }
-
-                     */
                         if (BombHeight > 40 || BombWidth > 40) {
                             for (int i = 0; i < (BombHeight / 40); i++) {
                                 for (int j = 0; j < (BombWidth / 40); j++) {

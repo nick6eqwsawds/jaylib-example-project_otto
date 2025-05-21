@@ -12,18 +12,20 @@ import java.util.concurrent.TimeUnit.*;
 
 
 public class Board {
-    int turn = 1;
+    private static int turn = 1;
     private final int rowsX;
     private final int rowsY;
     private final Tile[][] grid;
     private final List<Ship> ships;
 
+    //skapar brädan
     public Board(int rowsX, int rowsY){
         this.rowsX = rowsX;
         this.rowsY = rowsY;
         this.grid = new Tile[rowsX][rowsY];
         this.ships = new ArrayList<>();
 
+        // skapar först en tom bräda
         for (int i = 0; i < rowsX; i++) {
             for (int j = 0; j < rowsY; j++) {
                 grid[i][j] = new Tile(i, j, TileType.EMPTY);
@@ -31,6 +33,8 @@ public class Board {
         }
     }
 
+    //skapar ships med x och y position och om de ska vara horizontella, sparar det i ett värde, byter de rutor som ship är på till ship
+    // sparar sedan var ship är i en array lista
     public void placeShips(Ship ship, int startX, int startY, boolean horizontal){
         for (int i = 0; i < ship.getSize(); i++) {
             int x = horizontal ? startX + i : startX+i;
@@ -43,6 +47,7 @@ public class Board {
         ships.add(ship);
     }
 
+    // kollar vilken typ av tile som spelarna träffat och byter värdet på vilken typ av ruta det är efter
     public void hitTile(int x, int y){
         if (grid[x][y].getTileType() == TileType.SHIP){
             grid[x][y].setTileType(TileType.HIT);
@@ -51,6 +56,7 @@ public class Board {
             grid[x][y].setTileType(TileType.MISS);
             System.out.println("Miss at "+x+" : "+y);
             System.out.println("next player turn");
+            //byter mellan turns för spelarna
             if (turn == 1){
                 turn = 2;
             } else if (turn == 2){
@@ -59,6 +65,7 @@ public class Board {
         }
     }
 
+    // ritar brädan och de olika rutorna och ändrar färgen beroende på vad som händer med rutan
     public void drawBoard(int offsetX, int offsetY, int ShowShip) throws InterruptedException {
         for (int i = 0; i < rowsX; i++) {
             for (int j = 0; j < rowsY; j++) {
@@ -70,19 +77,14 @@ public class Board {
                 } else if (tile.getTileType() == TileType.MISS) {
                     color = GRAY;
                 }
-                //Thread.sleep(2500);
-                //TimeUnit.SECONDS.sleep(4);
+
+                //gör så att man bara kan se sina egna skäpp under sin tur
                 if (ShowShip==1&&tile.getTileType() == TileType.SHIP){
                     //TimeUnit.SECONDS.sleep(2);
                     color = GREEN;
                 }
-                /*
-                else if (tile.getTileType() == TileType.SHIP) {
-                    color = GREEN;
-                }
 
-                 */
-
+                //byter färgen och ritar rutnätet
                 Raylib.DrawRectangle(offsetX + j * 40, offsetY + i * 40, 40, 40, color);
                 Raylib.DrawRectangleLines(offsetX + j * 40, offsetY + i * 40, 40, 40, BLACK);
             }
