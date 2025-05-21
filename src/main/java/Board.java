@@ -33,9 +33,9 @@ public class Board {
 
     public void placeShips(Ship ship, int startX, int startY, boolean horizontal){
         for (int i = 0; i < ship.getSize(); i++) {
-            int x = horizontal ? startX + i : startX;
+            int x = horizontal ? startX + i : startX+i;
             //int y = startX + i;
-            int y = horizontal ? startY + i : startY + i;
+            int y = horizontal ? startY+i : startY;
             //int x = horizontal ? startX : startY;
             grid[x][y].setTileType(TileType.SHIP);
 

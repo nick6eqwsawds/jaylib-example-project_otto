@@ -91,31 +91,52 @@ public class BattleShipsGame {
                     DrawRectangleLines(1075+40*i, 660, 39, 39, BLACK);
                 }
 
-                DrawText("Press numbers to pick and place at your character", 40, 560, 20, BLACK);
+                DrawText("Hold down numbers to pick and place at your character", 40, 560, 20, BLACK);
+                DrawText("Press space to confirm", 40, 600, 20, BLACK);
                 playerBoard.drawBoard(100, 100, 1);
-                if (IsKeyPressed(KEY_ONE)){
-                    int shipx1 = (playerx-800)/40;
-                    int shipy1 = (playery-100)/40;
-                    playerBoard.placeShips(new Ship(5), shipx1, shipy1, false);
-                    boats = boats +1;
+                if (IsKeyDown(KEY_ONE)){
+                    int placementx = playerx-700;
+                    int placementy = playery;
+                    DrawRectangle(placementx, placementy, 199, 39, GREEN);
+                    if (IsKeyPressed(KEY_SPACE)) {
+                        int shipx1 = (playerx - 800) / 40;
+                        int shipy1 = (playery - 100) / 40;
+                        playerBoard.placeShips(new Ship(5), shipx1, shipy1, false);
+                        boats = boats + 1;
+                    }
                 }
-                if (IsKeyPressed(KEY_TWO)){
-                    int shipx2 = (playerx-800)/40;
-                    int shipy2 = (playery-100)/40;
-                    playerBoard.placeShips(new Ship(3), shipx2, shipy2, false);
-                    boats = boats +1;
+                if (IsKeyDown(KEY_TWO)){
+                    int placementx = playerx-700;
+                    int placementy = playery;
+                    DrawRectangle(placementx, placementy, 119, 39, GREEN);
+                    if (IsKeyPressed(KEY_SPACE)) {
+                        int shipx2 = (playerx - 800) / 40;
+                        int shipy2 = (playery - 100) / 40;
+                        playerBoard.placeShips(new Ship(3), shipx2, shipy2, false);
+                        boats = boats + 1;
+                    }
                 }
-                if (IsKeyPressed(KEY_THREE)){
-                    int shipx3 = (playerx-800)/40;
-                    int shipy3 = (playery-100)/40;
-                    playerBoard.placeShips(new Ship(2), shipx3, shipy3, false);
-                    boats = boats +1;
+                if (IsKeyDown(KEY_THREE)){
+                    int placementx = playerx-700;
+                    int placementy = playery;
+                    DrawRectangle(placementx, placementy, 79, 39, GREEN);
+                    if (IsKeyPressed(KEY_SPACE)) {
+                        int shipx3 = (playerx - 800) / 40;
+                        int shipy3 = (playery - 100) / 40;
+                        playerBoard.placeShips(new Ship(2), shipx3, shipy3, false);
+                        boats = boats + 1;
+                    }
                 }
-                if (IsKeyPressed(KEY_FOUR)){
-                    int shipx4 = (playerx-800)/40;
-                    int shipy4 = (playery-100)/40;
-                    playerBoard.placeShips(new Ship(6), shipx4, shipy4, false);
-                    boats = boats +1;
+                if (IsKeyDown(KEY_FOUR)){
+                    int placementx = playerx-700;
+                    int placementy = playery;
+                    DrawRectangle(placementx, placementy, 239, 39, GREEN);
+                    if (IsKeyPressed(KEY_SPACE)) {
+                        int shipx4 = (playerx - 800) / 40;
+                        int shipy4 = (playery - 100) / 40;
+                        playerBoard.placeShips(new Ship(6), shipx4, shipy4, false);
+                        boats = boats + 1;
+                    }
                 }
                 if (IsKeyPressed(KEY_FIVE)){
                     int shipx5 = (playerx-800)/40;
@@ -239,6 +260,7 @@ public class BattleShipsGame {
 
                 //playerBoard.drawBoard(100, 100);
                 //enemyBoard.drawBoard(800, 100);
+
 
                 if (turn == 1) {
                     //DrawRectangle(100, 100, 399, 399, WHITE);
